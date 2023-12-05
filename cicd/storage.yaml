@@ -1,0 +1,27 @@
+# What do want?
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+spec:
+  storageClassName: silver-slow
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+# How do we want it implemented
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: local-storage
+spec:
+  storageClassName: silver-slow
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/mongo-db/test/"
+    type: DirectoryOrCreate
